@@ -19,12 +19,12 @@ public class FacultyController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Faculty> getFacultyInfo(@PathVariable long id) {
-        Faculty faculty = facultyService.findFaculty(id);
-        if (faculty == null) {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity getFacultyInfo(@RequestParam String name,
+                                         @RequestParam String color) {
+        if (name == null&&!name.isBlank()) {
+            return ResponseEntity.ok(facultyService.findFaculty(name, color));
         }
-        return ResponseEntity.ok(faculty);
+        return ResponseEntity.ok(facultyService.getAllFaculty());
     }
 
     @GetMapping
@@ -52,4 +52,5 @@ public class FacultyController {
         facultyService.deleteFaculty(id);
         return ResponseEntity.ok().build();
     }
+
 }

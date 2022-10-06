@@ -19,8 +19,8 @@ public class FacultyService {
         return facultyRepository.save(faculty);
     }
 
-    public Faculty findFaculty(long id) {
-        return facultyRepository.findById(id).get();
+    public Faculty findFaculty(String name, String color) {
+        return facultyRepository.findByNameOrColorContaisIgnoreCase(name, color);
     }
 
     public Faculty editFaculty(Faculty faculty) {

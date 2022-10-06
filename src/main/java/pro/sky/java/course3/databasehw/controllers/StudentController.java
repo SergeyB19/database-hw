@@ -19,8 +19,9 @@ public class StudentController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Student> getStudentInfo(@PathVariable long id) {
-        Student student = studentService.findStudent(id);
+    public ResponseEntity<Student> getStudentInfo(@RequestParam int min,
+                                                  @RequestBody int max) {
+        Student student = studentService.findStudent(min);
         if (student == null) {
             return ResponseEntity.notFound().build();
         }

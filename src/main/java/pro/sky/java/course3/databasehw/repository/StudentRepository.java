@@ -5,5 +5,5 @@ import pro.sky.java.course3.databasehw.model.Student;
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
-
+    Student findByAgeBetween(int age);
 }

@@ -20,8 +20,8 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    public Student findStudent(long id) {
-        return studentRepository.findById(id).get();
+    public Student findStudent(int age) {
+        return studentRepository.findByAgeBetween(age);
     }
 
     public Student editStudent(Student student) {
