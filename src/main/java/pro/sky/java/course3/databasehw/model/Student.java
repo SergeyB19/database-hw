@@ -1,9 +1,6 @@
 package pro.sky.java.course3.databasehw.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -16,6 +13,9 @@ public class Student {
     private int age;
     @OneToMany(mappedBy = "student")
     private Collection<Faculty> faculties;
+
+    @OneToOne
+    private Avatar avatar;
 
     public Student(long id, String name, int age) {
         this.id = id;
