@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import pro.sky.java.course3.databasehw.model.Avatar;
 import pro.sky.java.course3.databasehw.model.Student;
 import pro.sky.java.course3.databasehw.service.StudentService;
 
@@ -36,7 +37,7 @@ public class StudentController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity‹Student› getStudentInfo(@PathVariable Long id) {
+    public ResponseEntity<Student> getStudentInfo(@PathVariable Long id) {
         Student student = studentService.findStudent(id);
         if (student == null) {
             return ResponseEntity.notFound().build();
@@ -45,8 +46,8 @@ public class StudentController {
     }
 
     @GetMapping
-    public ResponseEntity‹Collection‹Student›› findStudents(@RequestParam(required = false) int age) {
-        if (age › 0) {
+    public ResponseEntity<Collection<Student>> findStudents(@RequestParam(required = false) int age) {
+        if (age > 0) {
             return ResponseEntity.ok(studentService.findByAge(age));
         }
         return ResponseEntity.ok(Collections.emptyList());
@@ -58,7 +59,7 @@ public class StudentController {
     }
 
     @PutMapping
-    public ResponseEntity‹Student› editStudent(@RequestBody Student student) {
+    public ResponseEntity<Student> editStudent(@RequestBody Student student) {
         Student foundStudent = studentService.editStudent(student);
         if (foundStudent == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -67,15 +68,15 @@ public class StudentController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity‹Void› deleteStudent(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
         return ResponseEntity.ok().build();
     }
 
 
     @PostMapping(value = "/{id}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity‹String› uploadAvatar(@PathVariable Long id, @RequestParam MultipartFile avatar) throws IOException {
-        if (avatar.getSize() › 1024 * 300) {
+    public ResponseEntity<String> uploadAvatar(@PathVariable Long id, @RequestParam MultipartFile avatar) throws IOException {
+        if (avatar.getSize() >= 1024 * 300) {
             return ResponseEntity.badRequest().body("File is too big");
         }
 
@@ -84,7 +85,7 @@ public class StudentController {
     }
 
     @GetMapping(value = "/{id}/avatar/preview")
-    public ResponseEntity‹byte[]› downloadAvatar(@PathVariable Long id) {
+    public ResponseEntity<byte[]> downloadAvatar(@PathVariable Long id) {
         Avatar avatar = studentService.findAvatar(id);
 
         HttpHeaders headers = new HttpHeaders();
